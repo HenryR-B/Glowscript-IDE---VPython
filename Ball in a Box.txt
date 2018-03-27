@@ -1,0 +1,44 @@
+GlowScript 2.4 VPython
+from __future__ import division
+ball = sphere(pos=vec(-5,-8.945,0), radius=(1), color= vec(10,1,0.5), opacity=0.9)
+wallR = box(pos=vec(10,0,0), size=vec((1/10),20,40), color=color.green)
+wallL = box(pos=vec(-10,0,0), size=vec((1/10),20,40), color=color.green)
+wallT = box(pos=vec(0,10,0), size=vec(20,(1/10),40), color=color.green)
+wallBo = box(pos=vec(0,-10,0), size=vec(20,(1/10),40), color=color.green)
+wallBa = box(pos=vec(0,0,-20), size=vec(20,20,1/10), color= color.green)
+wallF = box(pos=vec(0,0,20), size=vec(20,20,1/10), color= color.green, opacity = 0)
+f = 0.93 # dampening constant from friction
+t = 0
+dt = 0.001
+ball.velocity = vec(10,15,-5)
+while t<1000:
+        rate(2500)
+        ball.velocity.y = ball.velocity.y - 9.81*dt
+        if ball.pos.x > wallR.pos.x - 1.05 :
+            ball.pos.x = ball.pos.x -0.005
+            ball.velocity.x = -ball.velocity.x *f
+            print(ball.velocity)
+        if ball.pos.x < wallL.pos.x +1.05 :
+            ball.pos.x = ball.pos.x +0.005
+            ball.velocity.x = -ball.velocity.x *f
+            print(ball.velocity)
+        if ball.pos.y > wallT.pos.y - 1.05 :
+            ball.pos.y = ball.pos.y -0.005
+            ball.velocity.y = -ball.velocity.y *f
+            print(ball.velocity)
+        if ball.pos.y < wallBo.pos.y +1.05 :
+            ball.pos.y = ball.pos.y +0.005
+            ball.velocity.y = -ball.velocity.y *f
+            ball.velocity.x = ball.velocity.x *f
+            ball.velocity.z = ball.velocity.z *f
+            print(ball.velocity)    
+        if ball.pos.z < wallBa.pos.z +1.05 :
+            ball.pos.z = ball.pos.z +0.005
+            ball.velocity.z = -ball.velocity.z *f
+            print(ball.velocity)
+        if ball.pos.z > wallF.pos.z -1.05 :
+            ball.pos.z = ball.pos.z -0.005
+            ball.velocity.z = -ball.velocity.z *f
+            print(ball.velocity)
+        ball.pos = ball.pos + ball.velocity*dt
+        t = t + dt
